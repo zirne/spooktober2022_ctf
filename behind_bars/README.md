@@ -12,9 +12,8 @@ A decent way to start off the CTF. :)
 
 ## Toolkit ##
 
-[Photopea](https://www.photopea.com/)
-
-[Online barcode reader](https://online-barcode-reader.inliteresearch.com/)
+- [Photopea](https://www.photopea.com/)
+- [Online barcode reader](https://online-barcode-reader.inliteresearch.com/)
 
 ## TL:DR ##
 - Invert image

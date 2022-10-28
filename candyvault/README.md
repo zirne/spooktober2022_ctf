@@ -122,9 +122,9 @@ Winner winner, chicken dinner.
 
 ## Toolkit ##
 
-[Docker Desktop](https://www.docker.com/products/docker-desktop/)
-[VScode](https://code.visualstudio.com/)
-[PyCharm](https://www.jetbrains.com/pycharm/)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [VScode](https://code.visualstudio.com/)
+- [PyCharm](https://www.jetbrains.com/pycharm/)
 
 ## TL:DR ##
 - Figure out that the check for banned hashes isn't a part of the PHP module (either by trial and error, or looking at source).

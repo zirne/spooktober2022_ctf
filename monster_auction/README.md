@@ -51,8 +51,8 @@ I could FINALLY run the attack I dreamt up a few days before. Wrote a python scr
 
 ## Toolkit ##
 
-[NodeJS](https://nodejs.org/en/)
-[PyCharm](https://www.jetbrains.com/pycharm/)
+- [NodeJS](https://nodejs.org/en/)
+- [PyCharm](https://www.jetbrains.com/pycharm/)
 
 ## TL:DR ##
 - Discover "location" property by trying "location=Transylvania"

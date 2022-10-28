@@ -11,8 +11,8 @@ Paste it into PyCharm, create a loop over all possible iterations, break when sp
 
 ## Toolkit ##
 
-[Google](https://google.com)
-[PyCharm](https://www.jetbrains.com/pycharm/)
+- [Google](https://google.com)
+- [PyCharm](https://www.jetbrains.com/pycharm/)
 
 ## TL:DR ##
 - Get frustrated
