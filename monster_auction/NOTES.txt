@@ -1,0 +1,100 @@
+Monster Auction Discovery
+
+Webbservern är NodeJS med Express (Syns i "X-Served-By"-headern)
+
+om man gör en post mot /clients får man
+[{'name': 'Jason'}, {'name': 'Freddy'}, {'name': 'Hannibal'}, {'name': 'Batman'}, {'name': 'Jack The Ripper'}, {'name': 'Annabelle'}, {'name': "Frankenstein's Monster"}, {'name': 'Dracula'}, {'name': 'Michael Myers'}]
+
+till svar.
+
+Sidan skiter i GET-parametrar http://spooktoberctf.se:22083/clients?name=Jason visar hela listan
+
+nycklar är case-sensitive, "Name=Dracula" returnerar []
+värden är case-sensitive, "name=dracula" returnerar []
+
+location är en accepterad nyckel, "location=Transylvania" returnerar [{"name":"Dracula"}]
+name+location är en accepterad kombo, "name=Dracula&location=Transylvania" returnerar [{"name":"Dracula"}]
+
+I och med att "location=Transylvania" ger resultat så indikerar det att datat är strukturerat och man kan querya enbart om man har känd parameter och känd data
+
+Det är en rätt dålig sökfunktion då ingen form av wildcard verkar fungera:
+	"name=Ja.*" returnerar []
+	"name=Ja*" returnerar []
+	"name=Ja%" returnerar []
+
+
+SQL-injektion funkar inte:
+	1 OR 5=5;-- returnerar []
+	1' OR 5=5;-- returnerar []
+	1" OR 5=5;-- returnerar []
+
+SQL-truncation-attack funkar inte
+
+Servern respekterar "Content-Length"-headern om man specar den. Bodyn "name=JasonHäst" med Content-Length: 10 returnerar [{"name":"Jason"}]
+
+
+Problem:
+	Vi har inte värdet för korrekt location, och även när vi har en korrekt location får vi bara objekt med namn tillbaks
+	Det finns ingen möjlighet till wildcard-sökning (vad vi vet). Det hade löst ALLT.
+
+
+Wait what?
+[name]=Jason returnerar [{"name":"Jason"}]
+[location]=Transylvania returnerar [{"name":"Dracula"}]
+
+Vaihelvete?
+
+[location]=Transylvania&[name]=Dracula returnerar [{"name":"Dracula"}]
+
+
+length=9, [length]=9 samt .length=9 funkar inte, så vi verkar inte kunna accessa vad som helst hur som helst
+
+vad i helvete pågår serverside?
+
+Okej, det funkar i Javascript OCKSÅ?
+
+JS:
+data = {'name': 'Janne', 'location': 'Här'}
+
+data[['name']] // 'Janne'
+data[[[['name']]]] // 'Janne' // Also, JS är batshit insane
+
+
+DÄREMOT så har vi inte samma beteende serverside, bara en omgång brackets funkar?
+
+
+__proto__=[object Object] SPOTTAR UR SIG HELA LISTAN! Möjlig proto pollution-attack?
+
+Hmm, __proto__=Whatever ger också matchningar, vafan?
+
+
+Är det en dead end?
+
+Har ingen kod, så det kan mycket väl vara nåt annat. :/
+
+// sex timmar senare
+
+AAAAAAAH JAG ÄR EN IDIOT
+
+Den returnerar ALLT eftersom den filtrerar bort __proto__-taggen INNAN parsing. SUCK.
+
+Tillbaka till ritbordet.
+
+
+Fortfarande konstigt att [name]=Freddy funkar. Wat?
+
+Kan det vara nån Keepalive-exploit?
+
+Katastrofen svarar inte på HTTP/2.
+
+Vad missar jag?
+
+Brute Force? Antagligen för många nycklar för att testa. Vi kan inte testa stegvis då wildcard-sökning inte funkar.
+
+Anrop med metoden "OPTIONS" returnerar 'GET,HEAD,POST'
+
+Anrop med metoden "OPTIONS" använder GET-parametrar. Det exploderar hårdare då.
+
+
+Har provat med payload "name=Ja???" där ??? är samtliga kombinationer av tecknen a-z A-Z 0-9 _-%*\\/ för att försöka hitta något slags definiton för wildcards. Har bara fått "[]" i respons.
+
