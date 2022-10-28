@@ -103,9 +103,9 @@ pipedream endpoint to serve my JWKS as static content, generated a token, and go
 
 ## Toolkit ##
 
-[jwt_tool](https://github.com/ticarpi/jwt_tool/wiki)
-[NodeJS](https://nodejs.org/en/)
-[Pipedream](https://pipedream.com)
+- [jwt_tool](https://github.com/ticarpi/jwt_tool/wiki)
+- [NodeJS](https://nodejs.org/en/)
+- [Pipedream](https://pipedream.com)
 
 ## TL:DR ##
 - Read everything you can find about JWKS and JWTs.
