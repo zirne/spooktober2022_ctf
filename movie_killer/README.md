@@ -31,9 +31,9 @@ isn't optional if you do this by hand, apparently there's tools for this but I d
 
 ## Toolkit ##
 
-[ShellBags Explorer](https://ericzimmerman.github.io/#!index.md)
-[bmc-tools](https://github.com/ANSSI-FR/bmc-tools)
-[Microsoft Paint](paint.exe)
+- [ShellBags Explorer](https://ericzimmerman.github.io/#!index.md)
+- [bmc-tools](https://github.com/ANSSI-FR/bmc-tools)
+- [Microsoft Paint](paint.exe)
 
 ## TL:DR ##
 - Find RDP Cache files in "_%APPDATA%\Local\Microsoft\Terminal Server Client\Cache._"
